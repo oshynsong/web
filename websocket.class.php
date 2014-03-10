@@ -145,16 +145,15 @@ class WebSocket
 				break;
 			}
 		}
-		if(!is_null($found))   //delete the closed socket in the users array
-		{ 
-			array_splice($this->users, $found, 1); 
-		}
 		$index = array_search($clientSocket,$this->sockets);
-		socket_close($clientSocket);
-		$this->say($clientSocket." DISCONNECTED!");
-		if($index >= 0)   //delete socket pool in the sockets array
+		
+		if(!is_null($found))
 		{ 
+			array_splice($this->users, $found, 1);
 			array_splice($this->sockets, $index, 1); 
+			
+			socket_close($clientSocket);
+			$this->say($clientSocket." DISCONNECTED!");
 		}
 	}
 	
